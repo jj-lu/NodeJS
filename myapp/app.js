@@ -14,6 +14,14 @@ app.post('/post', (req, res) => {
   res.send('get post')
 })
 
+app.put('/user', (req, res) => {
+  res.send('got a put')
+})
+
+app.delete('/user', (req, res) => {
+  res.send('got a delete')
+})
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
