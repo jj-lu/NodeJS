@@ -2,8 +2,16 @@ const express = require('express')
 const fs = require('fs')
 const path = require('path')
 const bodyParser = require('body-parser')
+const ejs = require('ejs')
+
+/**
+ * 引入模块化路由
+ */
+const adminRouter = require('./router/admin')
 
 const app = express()
+
+app.use(adminRouter)
 
 /**
  * 全局中间件
@@ -122,6 +130,15 @@ app.get('/delete', checkMiddle, (request, response) => {
  * (如果静态资源与路由规则同时匹配，谁先匹配谁就响应)
  */
 app.use(express.static(__dirname + '/public'))
+
+/**
+ * 使用ejs模板引擎
+ */
+app.set('view engine', 'ejs')
+app.set('views', path.resolve(__dirname, 'views'))
+app.get('/ejs', (request, response) => {
+  response.render('test', { title: '测试express中使用ejs' })
+})
 
 // 匹配所有路径，可以作为404拦截
 app.all('*', (request, response) => {
